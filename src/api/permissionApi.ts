@@ -13,3 +13,10 @@ export async function getRolePermissions(roleId: string) {
 
     return response.data;
 }
+export async function updateRolePermissions(roleId: string, permissionIds: string[]) {
+    const response = await axiosClient.put(
+        `/roles/${roleId}/permissions`,
+        { permissionIds }
+    );
+    return response.data;
+}

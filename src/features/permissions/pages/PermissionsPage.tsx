@@ -6,7 +6,7 @@ import type { Roles } from "../../../types/role.types";
 import "../styles/PermissionsPage.css";
 import { getRoles } from "../../../api/roleApi";
 import type { Permission } from "../../../types/permission.type";
-import { getPermissions, getRolePermissions } from "../../../api/permissionApi";
+import { getPermissions, getRolePermissions, updateRolePermissions } from "../../../api/permissionApi";
 
 
 
@@ -54,8 +54,19 @@ export default function PermissionsPage() {
     },[]);
   
      
-    const handleSave = () => {
-        console.log("Save");
+    const handleSave = async () => {
+        try{
+            for (const roleId in rolePermissions) {
+                const permissions = rolePermissions[roleId];
+                await updateRolePermissions(roleId, permissions.map(p => p.id));
+                console.log("Save");
+            }
+        }
+
+            
+        catch (err) {
+            console.error(err);
+        }
     };
 
     const handlePermissionChange = (
